@@ -19,8 +19,9 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
     super.initState();
 
     _controller = YoutubePlayerController(
-      initialVideoId: widget.id,
+      initialVideoId: 'IVaILEl9mIE',
       params: const YoutubePlayerParams(
+        playsInline: true,
         startAt: const Duration(minutes: 1, seconds: 36),
         showControls: true,
         showFullscreenButton: true,
@@ -47,7 +48,7 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
 
   @override
   Widget build(BuildContext context) {
-    const player = YoutubePlayerIFrame();
+    const player = YoutubePlayerIFrame(aspectRatio: 18/9,);
     return YoutubePlayerControllerProvider(
       // Passing controller to widgets below.
       controller: _controller,
@@ -59,17 +60,16 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (kIsWeb && constraints.maxWidth > 800) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(child: player),
-                ],
-              );
+              return player;
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     const Expanded(child: player),
+              //   ],
+              // );
             }
-            return ListView(
-              children: [
-                player,
-              ],
+            return Center(
+              child: player,
             );
           },
         ),
